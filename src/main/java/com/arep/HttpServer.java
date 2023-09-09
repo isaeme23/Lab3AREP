@@ -30,12 +30,11 @@ public class HttpServer {
             }
 
 
-
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
                             clientSocket.getInputStream()));
-            String inputLine, outputLine;
+            String inputLine, outputLine = null;
 
 
 
@@ -57,28 +56,32 @@ public class HttpServer {
             }
             System.out.println("URI: " + uriString);
 
-            ComponentLoader.cargarComponentes(new String[]{("com.arep.HelloServices")});
-                if (uriString.startsWith("/hello?")) {
-                    outputLine = "HTTP/1.1 200 OK\r\n"
-                            + "Content-Type: application/json\r\n"
-                            + "\r\n"
-                            + ComponentLoader.ejecutar("/hello", uriString);
-                } else if (uriString.startsWith("/hellopost?")) {
-                    outputLine = "HTTP/1.1 200 OK\r\n"
-                            + "Content-Type: application/json\r\n"
-                            + "\r\n"
-                            + ComponentLoader.ejecutar("/hellopost", uriString);
-                } else {
-                    outputLine = getIndexResponse();
-                }
+            ComponentLoader.cargarComponentes();
+            if (uriString.startsWith("/image") || uriString.startsWith("/file")){
+                System.out.println("Esta cosa es: "+uriString.split("[?]")[0]);
+                System.out.println("Estamos buscando "+uriString.split("=")[1]);
+                ComponentLoader.ejecutar(uriString.split("[?]")[0], uriString.split("=")[1], clientSocket);
+            } else if (uriString.contains("?")) {
+                outputLine = "HTTP/1.1 200 OK\r\n"
+                        + "Content-Type: application/json\r\n"
+                        + "\r\n"
+                        + ComponentLoader.ejecutar(uriString.split("[?]")[0], uriString);
+                out.println(outputLine);
 
-            out.println(outputLine);
+                out.close();
+                in.close();
+                clientSocket.close();
+            } else{
+                outputLine = getIndexResponse();
+                out.println(outputLine);
 
-
-
-            out.close();
+                out.close();
+                in.close();
+                clientSocket.close();
+            }
             in.close();
             clientSocket.close();
+
         }
         serverSocket.close();
     }
@@ -146,6 +149,7 @@ public class HttpServer {
                 + "                    .then(y => document.getElementById(\"postrespmsg\").innerHTML = y);\n"
                 + "            }\n"
                 + "        </script>\n"
+                + "        <img src=\"./resources/public/imgpng.png\" />\n"
                 + "    </body>\n"
                 + "</html>";
         return response;
