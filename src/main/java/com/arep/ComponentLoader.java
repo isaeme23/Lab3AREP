@@ -23,8 +23,9 @@ public class ComponentLoader {
         return servicios.get(path).invoke(null, (Object) param) + "";
     }
 
-    public static String ejecutar(String path, String param, Socket socket) throws InvocationTargetException, IllegalAccessException {
-        return servicios.get(path).invoke(null, (Object) param, (Object) socket)+"";
+    public static void ejecutar(String path, String param, Socket socket) throws InvocationTargetException, IllegalAccessException {
+        System.out.println("Esto es: "+servicios.get(path));
+        servicios.get(path).invoke(null, (Object) param, (Object) socket);
     }
     public static void cargarComponentes() throws ClassNotFoundException {
         File file = new File("target/classes/com/arep/");

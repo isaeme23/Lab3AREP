@@ -32,7 +32,8 @@ public class HelloServices {
     }
 
     @GetMapping("/file")
-    public static void getFile(String arg, Socket socket){
+    public static void getFile(String arg, Socket socket) throws IOException {
         m = new TextMediatory(arg, socket);
+        m.reply();
     }
 }

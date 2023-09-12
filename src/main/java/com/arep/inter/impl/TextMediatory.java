@@ -36,7 +36,7 @@ public class TextMediatory implements Mediatory {
 
     @Override
     public void reply() throws IOException {
-        Path p = Paths.get("target/classes/public"+path);
+        Path p = Paths.get("target/classes/public/"+path);
         PrintWriter out = new PrintWriter(client.getOutputStream(), true);
         Charset charset = Charset.forName("US-ASCII");
         String line;
