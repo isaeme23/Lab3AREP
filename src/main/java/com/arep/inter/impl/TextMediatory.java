@@ -33,7 +33,6 @@ public class TextMediatory implements Mediatory {
      * Metodo para responder con el contenido del archivo
      * @throws IOException Excepcion de entrada/salida
      */
-
     @Override
     public void reply() throws IOException {
         Path p = Paths.get("target/classes/public/"+path);
@@ -58,6 +57,7 @@ public class TextMediatory implements Mediatory {
             outputLine += "Content-Type: text/"+type+" \r\n"
                     + "\r\n";
         }
+
         System.out.println("Tipo!!!!!!1: "+ type);
         outputLine += response;
 
@@ -66,8 +66,12 @@ public class TextMediatory implements Mediatory {
         client.close();
     } // Cierre del metodo
 
+    /**
+     * Metodo encargado de devolver el tipo de la imagen almacenada en la ruta
+     * @return String con el tipo de la imagen
+     */
     @Override
     public String typeFile() {
         return path.split("\\.")[1];
     }
-}
+} // Cierre de la clase

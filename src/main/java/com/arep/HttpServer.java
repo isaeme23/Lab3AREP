@@ -8,8 +8,19 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
+/**
+ * Clase que funciona como servidor HTTP
+ * @author Isabella Manrique
+ * @version 13-9-2023
+ */
 public class HttpServer {
 
+    /**
+     * Metodo principal de la clase
+     * @param args Arreglo de argumentos
+     * @throws IOException Excepcion de entrada/salida
+     */
     public static void main(String[] args) throws IOException, InvocationTargetException, IllegalAccessException, ClassNotFoundException {
         ServerSocket serverSocket = null;
         try {
@@ -149,7 +160,6 @@ public class HttpServer {
                 + "                    .then(y => document.getElementById(\"postrespmsg\").innerHTML = y);\n"
                 + "            }\n"
                 + "        </script>\n"
-                + "        <img src=\"./resources/public/imgpng.png\" />\n"
                 + "    </body>\n"
                 + "</html>";
         return response;

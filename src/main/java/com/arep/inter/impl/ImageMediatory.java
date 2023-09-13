@@ -12,16 +12,32 @@ import java.net.Socket;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Clase que se encarga de mostrar las imagenes para la aplicacion web
+ * @author Isabella Manrique
+ * @version 13-9-2023
+ */
 public class ImageMediatory implements Mediatory {
 
+    // Atributos de la clase
     String path;
     Socket client;
     String outputLine = "HTTP/1.1 200 OK \r\n";
 
+    /**
+     * Constructor de la clase
+     * @param path Ruta
+     * @param client Socket a conectar
+     */
     public ImageMediatory(String path, Socket client){
         this.path = path;
         this.client = client;
     }
+
+    /**
+     * Metodo encargado de responder con la imagen encontrada dependiendo de la ruta
+     * @throws IOException Excepcion de entrada-salida
+     */
     @Override
     public void reply() throws IOException {
         String type = typeFile();
@@ -37,8 +53,12 @@ public class ImageMediatory implements Mediatory {
         clientout.close();
 
         client.close();
-    }
+    } // Cierre del metodo
 
+    /**
+     * Metodo encargado de devolver el tipo de la imagen almacenada en la ruta
+     * @return String con el tipo de la imagen
+     */
     @Override
     public String typeFile() {
         if (path.contains(".")) {
@@ -46,5 +66,5 @@ public class ImageMediatory implements Mediatory {
         } else{
             return "";
         }
-    }
-}
+    }// Cierre del metodo
+} // Cierre de la clase

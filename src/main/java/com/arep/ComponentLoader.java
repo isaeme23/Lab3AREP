@@ -10,23 +10,47 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * Clase para cargar las clases funcionales
+ * @author Isabella Manrique
+ * @version 13-9-2023
+ */
 public class ComponentLoader {
 
+    // Atributos de la clase
     private static Map<String, Method> servicios = new HashMap<>();
 
-    public static void principal(String[] args) throws ClassNotFoundException, InvocationTargetException, IllegalAccessException {
-        cargarComponentes();
-        System.out.println("EN EJECUCION: "+ ejecutar("/hello", "?name=Pedro&secondname=Perez"));
-    }
-
+    /**
+     * Metodo para ejecutar el metodo por parametro
+     * @param path nombre del metodo
+     * @param param parametro del metodo
+     * @return nombre del metodo
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     public static String ejecutar(String path, String param) throws InvocationTargetException, IllegalAccessException {
         return servicios.get(path).invoke(null, (Object) param) + "";
     }
 
+    /**
+     * Metodo para ejecutar el metodo por parametro
+     * @param path nombre del metodo
+     * @param param parametro del metodo
+     * @param socket socket a conectar por el metodo
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+
     public static void ejecutar(String path, String param, Socket socket) throws InvocationTargetException, IllegalAccessException {
         System.out.println("Esto es: "+servicios.get(path));
         servicios.get(path).invoke(null, (Object) param, (Object) socket);
-    }
+    } // Cierre del metodo
+
+    /**
+     * Metodo principal de la clase que carga las clases que contienen la etiqueta de Componente y carga los metodos de dicha clase
+     * @throws ClassNotFoundException
+     */
     public static void cargarComponentes() throws ClassNotFoundException {
         File file = new File("target/classes/com/arep/");
         String[] files = file.list();
@@ -51,5 +75,5 @@ public class ComponentLoader {
             }
 
         }
-    }
-}
+    } // Cierre del metodo
+} // Cierre de la clase
